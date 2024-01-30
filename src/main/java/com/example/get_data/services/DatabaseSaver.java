@@ -1,4 +1,4 @@
-package com.example.get_data;
+package com.example.get_data.services;
 
 import com.example.get_data.models.Post;
 

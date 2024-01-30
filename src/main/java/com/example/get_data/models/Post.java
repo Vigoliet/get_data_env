@@ -6,6 +6,9 @@ public class Post {
     private String title;
     private String body;
 
+    public Post() {
+    }
+
     public Post(int userId, int id, String title, String body) {
         this.userId = userId;
         this.id = id;
@@ -50,8 +53,7 @@ public class Post {
         return "Post{" +
                 "userId=" + userId +
                 ", id=" + id +
-                ", title='" + title + '\'' +
-                ", body='" + body + '\'' +
+                ", title='" + title +
                 '}';
     }
 }

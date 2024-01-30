@@ -1,4 +1,4 @@
-package com.example.get_data;
+package com.example.get_data.services;
 
 import com.example.get_data.models.Post;
 import com.google.gson.Gson;
@@ -13,20 +13,43 @@ import org.apache.hc.core5.http.io.entity.EntityUtils;
 import java.io.IOException;
 import java.lang.reflect.Type;
 import java.net.http.HttpClient;
+import java.net.http.HttpRequest;
 import java.net.http.HttpResponse;
+import java.util.ArrayList;
 import java.util.List;
 
 public class ApiClient {
     private static final String API_URL = "https://jsonplaceholder.typicode.com/posts";
 
     public static List<Post> getPosts() throws IOException, ParseException {
-        CloseableHttpClient client = HttpClients.createDefault();
-        HttpGet request = new HttpGet(API_URL);
-        CloseableHttpResponse response = client.execute(request);
-        String json = EntityUtils.toString(response.getEntity());
-        Gson gson = new Gson();
+
+        var postJson = getPostsBody();
+
+        var gson = new Gson();
         Type postListType = new TypeToken<List<Post>>(){}.getType();
-        return gson.fromJson(json, postListType);
+        
+        return gson.fromJson(postJson, postListType);
+
+    }
+
+    private static String getPostsBody() throws IOException {
+        HttpRequest request = HttpRequest.newBuilder()
+                .uri(java.net.URI.create(API_URL))
+                .version(HttpClient.Version.HTTP_2)
+                .GET()
+                .build();
+
+
+        var clientBuilder = HttpClient
+                .newBuilder();
+        try(var client = clientBuilder.build()){
+            var response = client.send(request, HttpResponse.BodyHandlers.ofString());
+
+            return response.body();
+
+        } catch (InterruptedException e){
+            throw new RuntimeException(e);
+        }
     }
 
 }

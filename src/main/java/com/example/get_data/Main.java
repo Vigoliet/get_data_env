@@ -16,7 +16,7 @@ public class Main {
         // Write some posts to verify
         posts.stream().limit(1).forEach(System.out::println);
 
-        //FileSaver.savePostToFile(posts, "posts.txt");
-        //DatabaseSaver.savePostsToDatabase(posts);
+        FileSaver.savePostToFile(posts, "posts.txt");
+        DatabaseSaver.savePostsToDatabase(posts);
     }
 }

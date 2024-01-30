@@ -27,7 +27,7 @@ public class ApiClient {
 
         var gson = new Gson();
         Type postListType = new TypeToken<List<Post>>(){}.getType();
-        
+
         return gson.fromJson(postJson, postListType);
 
     }
